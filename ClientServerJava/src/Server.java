@@ -12,12 +12,23 @@ public class Server {
             Socket clientSocket = serverSocket.accept();  //Get connection with Client  Open clientSocket  Listener to port
             
             System.out.println("Client accepted " + (++count));
+
             OutputStreamWriter writer = new OutputStreamWriter(clientSocket.getOutputStream());
-            writer.write(               //Send text
-                    "HTTP/1.0 200 OK\r\n" +
+
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(
+                            clientSocket.getInputStream()));
+
+            String request = reader.readLine();
+ //           String response = "#" + count + ", your message lingth is " + request.length() + "\n";
+
+          String response = "HTTP/1.0 200 OK\r\n" +
                             "Content-type: text/html\r\n" +
                             "\r\n" +
-                            "<h1>Hello #" + count + "/h1>\r\n");
+                            "<h1>Hello #" + count + "/h1>\r\n";
+
+            writer.write(response);
+
             writer.flush();     //Guarantees sending
             writer.close();     //Close writer
 
