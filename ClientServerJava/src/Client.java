@@ -7,13 +7,16 @@ public class Client {
 
         Socket clientSocket = new Socket("127.0.0.1",8000);
 
-        OutputStreamWriter writer = new OutputStreamWriter(clientSocket.getOutputStream());
+        BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(
+                        clientSocket.getOutputStream()));
 
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(
                         clientSocket.getInputStream()));
 
         writer.write("Get me some information\n");
+        writer.newLine();
         writer.flush();
 
         String response = reader.readLine();

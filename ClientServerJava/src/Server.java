@@ -3,7 +3,6 @@ import java.io.*;   //for input output
 
 
 public class Server {
-
     public static void main(String[] args) throws IOException {
 
         ServerSocket serverSocket = new ServerSocket(8000); //Prepare port
@@ -13,22 +12,25 @@ public class Server {
             
             System.out.println("Client accepted " + (++count));
 
-            OutputStreamWriter writer = new OutputStreamWriter(clientSocket.getOutputStream());
+            BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(
+                        clientSocket.getOutputStream()));
 
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(
                             clientSocket.getInputStream()));
 
-            String request = reader.readLine();
- //           String response = "#" + count + ", your message lingth is " + request.length() + "\n";
+            String request = reader.readLine(); // Reading before line end
+            String response = "#" + count + ", your message length is " + request.length();
 
-          String response = "HTTP/1.0 200 OK\r\n" +
-                            "Content-type: text/html\r\n" +
-                            "\r\n" +
-                            "<h1>Hello #" + count + "/h1>\r\n";
+//          String response = "HTTP/1.0 200 OK\r\n" +
+//                            "Content-type: text/html\r\n" +
+//                            "\r\n" +
+//                            "<h1>Hello #" + count + "/h1>\r\n";
+
 
             writer.write(response);
-
+            writer.newLine();
             writer.flush();     //Guarantees sending
             writer.close();     //Close writer
 
