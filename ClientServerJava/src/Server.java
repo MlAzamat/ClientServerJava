@@ -23,10 +23,10 @@ public class Server {
             String request = reader.readLine(); // Reading before line end
             String response = "#" + count + ", your message length is " + request.length();
 
-//          String response = "HTTP/1.0 200 OK\r\n" +
-//                            "Content-type: text/html\r\n" +
-//                            "\r\n" +
-//                            "<h1>Hello #" + count + "/h1>\r\n";
+            response += "\nHTTP/1.0 200 OK\n" +
+                            "Content-type: text/html\n" +
+                            "\n" +
+                            "<h1>Hello #" + count + "/h1>\n";
 
 
             writer.write(response);
